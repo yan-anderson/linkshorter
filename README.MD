@@ -39,7 +39,7 @@ Set config and run
 pytest src/app.py
 ```
 
-## Run Docker
+## Running Docker
 
 Set ``CONFIG=docker`` and setup ``src/config/docker_config.py``
 
