@@ -41,7 +41,7 @@ pytest src/app.py
 
 ## Running Docker
 
-Set ``CONFIG=docker`` and setup ``src/config/docker_config.py``
+Set ``CONFIG=docker`` in ``src/.env``
 
 ```
 docker-compose build -v

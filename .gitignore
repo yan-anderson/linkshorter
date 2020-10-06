@@ -1,9 +1,13 @@
 /src/.pytest_cache
 /src/config/local_config.py
 /src/config/test_config.py
-/src/config/docker_config.py
 /src/.env
 /.pytest_cache
 .idea
 /src/__pycache__
 /src/config/__pycache__
+/src/controllers/__pycache__
+/src/models/__pycache__
+src/schemas/__pycache__
+src/tests/__pycache__
+src/migrations/__pycache__
