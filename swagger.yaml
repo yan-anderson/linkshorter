@@ -1,0 +1,121 @@
+swagger: "2.0"
+info:
+  description: "Link Shorter API"
+  version: "1.0.0"
+  title: "Link shorter"
+host: "127.0.0.1:5000"
+basePath: "/"
+tags:
+- name: "links"
+  description: "Create and redirect"
+- name: "statistics"
+  description: "Access to link statistic"
+schemes:
+- "https"
+- "http"
+paths:
+  /long_to_short:
+    post:
+      tags:
+      - "links"
+      summary: "Create short link"
+      description: ""
+      operationId: "addLink"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Full link that needs to be converted"
+        required: true
+        schema:
+          $ref: "#/definitions/LongToShortRequest"
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            $ref: "#/definitions/LongToShortResult"
+        "432":
+          description: "Full link not porvided"
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /{short_link_postfix}:
+    get:
+      tags:
+      - "links"
+      summary: "Redirect to full link"
+      description: ""
+      operationId: "getLink"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "short_link_postfix"
+        in: "path"
+        description: "Short link postfix"
+        required: true
+        type: "string"
+      responses:
+        "302":
+          description: "Redirect to full link"
+        "404":
+          description: "Invalid postfix"
+          schema:
+            $ref: '#/definitions/Error'
+  /statistics/{short_link_postfix}:
+    get:
+      tags:
+      - "statistics"
+      summary: "Get statistic by link"
+      description: ""
+      operationId: "getStatistic"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "short_link_postfix"
+        in: "path"
+        description: "Short link postfix"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            $ref: '#/definitions/StatisticsResult'
+        "404":
+          description: "Invalid postfix"
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  LongToShortRequest:
+    type: "object"
+    properties:
+      full_link:
+        type: "string"
+  LongToShortResult:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+        properties:
+          short_link:
+            type: "string"
+  StatisticsResult:
+    type: "object"
+    properties:
+      result:
+        type: "object"
+        properties:
+          statistic:
+            type: "object"
+            properties:
+              clicks_count:
+                type: "integer"
+                minimum: 0
+  Error:
+    type: "object"
+    properties:
+      error:
+        type: "string"
